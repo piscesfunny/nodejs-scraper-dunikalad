@@ -1,0 +1,75 @@
+const cheerio = require('cheerio')
+const { getPage, isValidItem } = require('./utils');
+
+const sourcesPath = path.resolve(__dirname, './sources');
+
+const files = fs.readdirSync(sourcesPath);
+
+const sources = files.reduce((result, file) => {
+  const [name] = file.split('.');
+  result[name] = require(path.join(sourcesPath, `/${name}`));
+  return result;
+}, {});
+
+
+const { env } = process;
+const { getPage } 
+const {
+  function: testFunction,
+  county = 'Dublin',
+  countryCode = 'ie',
+  searchTerm = '',
+  source,
+  url,
+} = env;
+
+const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
+
+if (testFunction === 'getListings') {
+  const main = async () => {
+    const address = {
+      county,
+      countryCode,
+    };
+    const data = await getListings(address, searchTerm);
+    writeFileSync(resolve('./results/get-listing-results.json'), JSON.stringify(data, null, 2));
+  };
+
+  return main();
+}
+
+if (testFunction === 'scrapePage') {
+    const main = async () => {
+
+    const { $, resolvedUrl } = await getPage(url, scrapePageRequestOptions);
+    
+    const data = await scrapePage({
+      url: resolvedUrl,
+      $,
+    });
+
+    writeFileSync(resolve('./results/get-scrape-page-results.json'), JSON.stringify(data, null, 2));
+  };
+
+  return main();
+}
+
+if (testFunction === 'full') {
+  
+  const main = async () => {
+    const [{ url, ...existingData }] = await getListings(address, searchTerm);
+
+    const { $, resolvedUrl } = await getPage(url);
+    
+    const data = await scrapePage({
+      url: resolvedUrl,
+      $,
+      ...existingData
+    });
+
+    writeFileSync(resolve('./full-test-results.json'), JSON.stringify(data, null, 2));
+    isValidItem(data);
+  };
+
+  return main();
+}
