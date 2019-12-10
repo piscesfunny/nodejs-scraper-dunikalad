@@ -42,7 +42,6 @@ const scrapePage = ({
     description: $('.viewDataFD').first().html(),
     ...existingData,
   };
-  isValidItem(data);
   return data;
 };
 

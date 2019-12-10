@@ -33,7 +33,6 @@ const scrapePage = ({
     description: $('.desc').html(),
     ...existingData,
   };
-  isValidItem(data);
   return data;
 };
 

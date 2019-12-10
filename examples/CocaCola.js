@@ -53,7 +53,6 @@ const scrapePage = ({
     description: $('.jobCopy').html(),
     ...existingData,
   };
-  isValidItem(data);
   return data;
 };
 
