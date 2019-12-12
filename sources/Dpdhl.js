@@ -24,12 +24,7 @@ const getListings = async (address, searchTerm) => {
 
 const scrapePage = ({url, $, ...existingData}) => {
   const title = $('h1.bar-title-primary').text()
-  let description = ''
-  const jobDetails = $('div.earcu_posdescriptionnote p')
-  for (let i=0; i<jobDetails.length; i++){
-    description += $(jobDetails[i]).text()
-    description += '\n'
-  }
+  let description = $('div.ats-description').html().trim()
   const data = {
     url,
     title,
