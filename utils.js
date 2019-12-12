@@ -2,7 +2,7 @@ const request = require('request-promise');
 const cheerio = require('cheerio')
 
 const getMissingKeys = (item) => {
-  return ['title', 'description', 'company', 'url'].map((key) => {
+  return ['title', 'address', 'description', 'company', 'url'].map((key) => {
     if (!item[key]) {
       return key;
     }

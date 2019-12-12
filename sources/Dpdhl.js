@@ -22,13 +22,16 @@ const getListings = async (address, searchTerm) => {
   return listings
 };
 
-const scrapePage = ({url, $, ...existingData}) => {
+const scrapePage = ({url, $, company, ...existingData}) => {
   const title = $('h1.bar-title-primary').text()
+  const address = $('span.job-location').text()
   let description = $('div.ats-description').html().trim()
   const data = {
     url,
     title,
+    address,
     description,
+    company,
     ...existingData
   };
   return data;

@@ -25,6 +25,7 @@ const {
   searchTerm = '',
   source,
   url,
+  company = 'www.dpdhl.jobs'
 } = env;
 
 const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
@@ -72,6 +73,7 @@ if (testFunction === 'all') {
     const data = await scrapePage({
       url: resolvedUrl,
       $,
+      company,
       ...existingData
     });
 
