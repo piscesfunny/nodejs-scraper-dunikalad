@@ -1,4 +1,8 @@
+require('dotenv').config()
 const cheerio = require('cheerio')
+const path = require('path');
+const fs = require('fs');
+
 const { getPage, isValidItem } = require('./utils');
 
 const sourcesPath = path.resolve(__dirname, './sources');
@@ -13,7 +17,7 @@ const sources = files.reduce((result, file) => {
 
 
 const { env } = process;
-const { getPage } 
+// const { getPage } 
 const {
   function: testFunction,
   county = 'Dublin',
@@ -25,6 +29,8 @@ const {
 
 const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
 
+console.log('starting test...')
+
 if (testFunction === 'getListings') {
   const main = async () => {
     const address = {
@@ -32,7 +38,8 @@ if (testFunction === 'getListings') {
       countryCode,
     };
     const data = await getListings(address, searchTerm);
-    writeFileSync(resolve('./results/get-listing-results.json'), JSON.stringify(data, null, 2));
+    // writeFileSync(resolve('./results/get-listing-results.json'), JSON.stringify(data, null, 2));
+    fs.writeFileSync('./results/get-listing-results.json', JSON.stringify(data, null, 2));
   };
 
   return main();
@@ -40,34 +47,35 @@ if (testFunction === 'getListings') {
 
 if (testFunction === 'scrapePage') {
     const main = async () => {
-
-    const { $, resolvedUrl } = await getPage(url, scrapePageRequestOptions);
+    
+    const { $, resolvedUrl } = await getPage({url, scrapePageRequestOptions});
     
     const data = await scrapePage({
       url: resolvedUrl,
       $,
     });
 
-    writeFileSync(resolve('./results/get-scrape-page-results.json'), JSON.stringify(data, null, 2));
+    fs.writeFileSync('./results/get-scrape-page-results.json', JSON.stringify(data, null, 2));
   };
 
   return main();
 }
 
-if (testFunction === 'full') {
-  
+if (testFunction === 'all') {
   const main = async () => {
+    const address = {
+      county,
+      countryCode,
+    };
     const [{ url, ...existingData }] = await getListings(address, searchTerm);
-
-    const { $, resolvedUrl } = await getPage(url);
-    
+    const { $, resolvedUrl } = await getPage({url});
     const data = await scrapePage({
       url: resolvedUrl,
       $,
       ...existingData
     });
 
-    writeFileSync(resolve('./full-test-results.json'), JSON.stringify(data, null, 2));
+    fs.writeFileSync('./results/full-test-results.json', JSON.stringify(data, null, 2));
     isValidItem(data);
   };
 
