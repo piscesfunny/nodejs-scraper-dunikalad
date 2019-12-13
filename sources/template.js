@@ -6,7 +6,7 @@
 const listingUrl = 'https://test.com/test-listing'
 
 const getListings = (
-  address, // Address
+  formattedAddress, // Address
   searchTerm,
 ) => {
   // scrape data from the listingUrl

@@ -1,8 +1,12 @@
 const request = require('request-promise');
 const cheerio = require('cheerio')
 
+const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
+
+const optionalKeys = ['salaryString', 'closedAt'];
+
 const getMissingKeys = (item) => {
-  return ['title', 'address', 'description', 'company', 'url'].map((key) => {
+  return requiredKeys.map((key) => {
     if (!item[key]) {
       return key;
     }
@@ -13,10 +17,13 @@ const getMissingKeys = (item) => {
 const isValidItem = (item) => {
   const keys = getMissingKeys(item);
   if (keys.length) {
-    console.log('Item has missing keys: ', keys.toString());
-    return false;
+    throw new Error('Item has missing keys: ', keys.toString());
   }
-  return true;
+  Object.keys(item).forEach((key) => {
+    if (![...requiredKeys, ...optionalKeys].includes(key)) {
+      throw new Error (`Item has invalid key - ${key}`);
+    }
+  });
 };
 
 const getPage = async ({

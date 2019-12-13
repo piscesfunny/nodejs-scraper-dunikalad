@@ -25,7 +25,6 @@ const {
   searchTerm = '',
   source,
   url,
-  company = 'www.dpdhl.jobs'
 } = env;
 
 const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
@@ -43,7 +42,7 @@ if (testFunction === 'getListings') {
     fs.writeFileSync('./results/get-listing-results.json', JSON.stringify(data, null, 2));
   };
 
-  return main();
+  return main().catch(console.error);
 }
 
 if (testFunction === 'scrapePage') {
@@ -59,7 +58,7 @@ if (testFunction === 'scrapePage') {
     fs.writeFileSync('./results/get-scrape-page-results.json', JSON.stringify(data, null, 2));
   };
 
-  return main();
+  return main().catch(console.error);
 }
 
 if (testFunction === 'all') {
@@ -73,7 +72,6 @@ if (testFunction === 'all') {
     const data = await scrapePage({
       url: resolvedUrl,
       $,
-      company,
       ...existingData
     });
 
@@ -81,5 +79,5 @@ if (testFunction === 'all') {
     isValidItem(data);
   };
 
-  return main();
+  return main().catch(console.error);
 }
