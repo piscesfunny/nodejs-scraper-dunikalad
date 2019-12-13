@@ -1,5 +1,6 @@
+.idea/
+.vscode/
 node_modules/
 results/
 .env
 .DS_Store
-.vscode
