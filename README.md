@@ -15,6 +15,31 @@ These functions should be exported from the same file as well as the `listingUrl
 
 I don't care how you get the data as long as the final result from `scrapePage` passes the `isValidItem` test function (see utils.js for implementation details).
 
+## Data to scrape
+### url
+The url of the job
+
+### title
+The job title
+
+### description 
+The html of the job description. Remove any elements that dont belong to the description like buttons or footers if they are present
+
+### company
+The name of the company posting the job. Usually can be found in the logo or in the url of the website.
+
+### formattedAddress
+The address of the job
+
+## Optional
+
+### salaryString
+Salary of the job
+
+### closesAt
+Closing date of the job as either a Date object or a ISO date string
+
+
 ## Work Flow
 User `template.js` as a starting point
 

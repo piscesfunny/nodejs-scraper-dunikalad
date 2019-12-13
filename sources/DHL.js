@@ -16,7 +16,10 @@ const getListings = async (address, searchTerm) => {
     if (urlA) {
       const url_portion = $(urlA).attr('href')
       const url = "https://www.dpdhl.jobs" + url_portion
-      listings.push({'url': url});
+      listings.push({
+        'url': url,
+        company: 'DHL',
+      });
     }
   }
   return listings
@@ -24,12 +27,12 @@ const getListings = async (address, searchTerm) => {
 
 const scrapePage = ({url, $, company, ...existingData}) => {
   const title = $('h1.bar-title-primary').text()
-  const address = $('span.job-location').text()
+  const formattedAddress = $('span.job-location').text()
   let description = $('div.ats-description').html().trim()
   const data = {
     url,
     title,
-    address,
+    formattedAddress,
     description,
     company,
     ...existingData
@@ -37,11 +40,8 @@ const scrapePage = ({url, $, company, ...existingData}) => {
   return data;
 };
 
-const scrapePageRequestOptions = {}
-
 module.exports = {
   scrapePage,
   getListings,
-  scrapePageRequestOptions,
   listingUrl,
 };
