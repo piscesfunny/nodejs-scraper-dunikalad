@@ -1,9 +1,9 @@
 const request = require('request-promise');
 const cheerio = require('cheerio')
-
+const moment = require('moment');
 const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
 
-const optionalKeys = ['salaryString', 'closedAt'];
+const optionalKeys = ['salaryString', 'closesAt'];
 
 const getMissingKeys = (item) => {
   return requiredKeys.map((key) => {
@@ -24,6 +24,16 @@ const isValidItem = (item) => {
       throw new Error (`Item has invalid key - ${key}`);
     }
   });
+  if (item.closesAt) {
+    if (item.closesAt instanceof Date) {
+      return;
+    }
+
+    if (typeof item.closesAt === 'string' && moment(item.closesAt).isValid()) {
+      return;
+    } 
+    throw new Error (`Item has invalid closesAt value - ${item.closesAt}`);
+  }
 };
 
 const getPage = async ({
