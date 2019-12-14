@@ -10,7 +10,7 @@ const getListings = async (address, searchTerm) => {
   });
   const $ = cheerio.load(html)
   const urlElems = $('li.job-entry')
-  listings = []
+  let listings = []
   for (let i=0; i<urlElems.length; i++) {
     const urlA = $(urlElems[i]).find('a')
     if (urlA) {
