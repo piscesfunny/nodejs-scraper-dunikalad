@@ -49,8 +49,7 @@ const scrapePage = ({url, $, ...existingData}) => {
     else closesAt += tempList[tempList.length - 1].trim()
   })
 
-  closesAt = moment(closesAt, 'YYYY-MM-DD HH:mm')
-  closesAt = moment(closesAt).format('YYYY-MM-DD HH:mm')
+  closesAt = moment(closesAt, 'DD/MM/YYYY HH:mm').toDate()
 
   let description = $('div.job-preview').html().trim()
 
