@@ -25,7 +25,7 @@ const getListings = async (address, searchTerm) => {
   return listings
 };
 
-const scrapePage = ({url, $, company, ...existingData}) => {
+const scrapePage = ({ url, $, existingData }) => {
   const title = $('h1.bar-title-primary').text()
   const formattedAddress = $('span.job-location').text()
   let description = $('div.ats-description').html().trim()
@@ -34,7 +34,6 @@ const scrapePage = ({url, $, company, ...existingData}) => {
     title,
     formattedAddress,
     description,
-    company,
     ...existingData
   };
   return data;

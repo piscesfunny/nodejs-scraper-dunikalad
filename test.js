@@ -49,7 +49,7 @@ if (testFunction === 'scrapePage') {
     
     const { $, resolvedUrl } = await getPage({url, scrapePageRequestOptions});
     
-    const data = await scrapePage({ url: resolvedUrl, $, company});
+    const data = await scrapePage({ url: resolvedUrl, $, existingData: {} });
 
     fs.writeFileSync('./results/get-scrape-page-results.json', JSON.stringify(data, null, 2));
   };
@@ -65,7 +65,7 @@ if (testFunction === 'all') {
     };
     const [{ url, ...existingData }] = await getListings(address, searchTerm);
     const { $, resolvedUrl } = await getPage({url});
-    const data = await scrapePage({ url: resolvedUrl, $, ...existingData });
+    const data = await scrapePage({ url: resolvedUrl, $, existingData });
 
     fs.writeFileSync('./results/full-test-results.json', JSON.stringify(data, null, 2));
     isValidItem(data);

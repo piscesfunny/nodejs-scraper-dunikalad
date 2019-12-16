@@ -31,7 +31,7 @@ const getListings = async (address, searchTerm) => {
   return listings
 };
 
-const scrapePage = ({url, $, ...existingData}) => {
+const scrapePage = ({url, $, existingData }) => {
   const title = $('center h3.job-title').text().trim()
   const addressElement = $('center table tbody tr').first()
   const formattedAddress = addressElement.text().trim()
