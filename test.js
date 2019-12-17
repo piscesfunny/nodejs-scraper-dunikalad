@@ -24,7 +24,6 @@ const {
   searchTerm = '',
   source,
   url,
-  company,
 } = env;
 
 const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
