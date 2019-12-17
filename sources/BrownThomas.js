@@ -55,7 +55,6 @@ const getListings = async (address, searchTerm) => {
         const url = $(urlA).attr('href')
         listings.push({
           'url': url,
-          company: 'BrownThomas',
         });
       }
     })
@@ -64,24 +63,35 @@ const getListings = async (address, searchTerm) => {
   return listings
 }
 
+const processTitle = (title) => {
+  title = title.replace(/Brown Thomas|Arnotts/gi, '')
+  if (title.includes(',')) {
+    return title
+    .split(',')
+    .map(word => word.trim())
+    .filter(Boolean)
+    .slice(1)
+    .join(',')
+  }
+  return title.replace(/\s\s/g, ' ');
+}
+
 const scrapePage = ({url, $, existingData }) => {
   const wrapperElement = $('div.col-md-4 div.oracletaleocwsv2-job-description')
   const title = $('div.col-md-4 div.oracletaleocwsv2-job-description > strong').text().trim()
 
-  const idElement = wrapperElement.find('div.row div.col-md-12').first()
-  const jobId = idElement.find('strong').text().trim()
-  const jobType = idElement.next().find('strong').text().trim()
   const formattedAddress = wrapperElement.find('div.row div.col-md-12').last().find('strong').text().trim()
 
+  const company = /Arnotts/ig.test(title) ?  'Arnotts': 'Brown Thomas';
+  
   const description = $('div.col-md-8').html().trim()
 
   const data = {
     url,
-    title,
-    jobId,
-    jobType,
+    title: processTitle(title),
     formattedAddress,
     description,
+    company,
     ...existingData
   };
   return data;
