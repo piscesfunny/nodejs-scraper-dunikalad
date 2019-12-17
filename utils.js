@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 const moment = require('moment');
 const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
 
-const optionalKeys = ['salaryString', 'closesAt'];
+const optionalKeys = ['salaryString', 'closesAt', 'jobId', 'jobType'];
 
 const getMissingKeys = (item) => {
   return requiredKeys.map((key) => {
