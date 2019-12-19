@@ -1,23 +1,19 @@
-const puppeteer = require('puppeteer');
+const { initPuppeteer, clearTextInputAndType } = require('../puppeteer');
 
 const listingUrl = 'https://isw.changeworknow.co.uk/dominos/vms/e/stores/search/edit'
 
 const getListings = async (address, searchTerm) => {
-  const browser = await puppeteer.launch({
-    // headless: false,
+debugger
+  const { browser, page } = await initPuppeteer({
     slowMo: 200
-  });
-  const page = await browser.newPage();
+  })
+
   await page.goto(listingUrl)
 
-  await page.type('input#search_origin_address', 'ireland')
-
-  await page.focus( 'input#search_range' )
-  await page.keyboard.down( 'Control' )
-  await page.keyboard.press( 'A' )
-  await page.keyboard.up( 'Control' )
-  await page.keyboard.press( 'Backspace' )
-  await page.type('input#search_range', '200')
+  await page.type('input#search_origin_address', 'athlone')
+  
+  const input = await page.$('input#search_range')
+  await clearTextInputAndType(input, '190')
 
   await page.keyboard.press('Enter')
   await page.waitForNavigation({waitUntil: 'load'})
