@@ -1,5 +1,3 @@
-// let request = require('request-promise');
-// const cheerio = require('cheerio')
 const puppeteer = require('puppeteer');
 
 const listingUrl = 'https://isw.changeworknow.co.uk/dominos/vms/e/stores/search/edit'
@@ -24,8 +22,6 @@ const getListings = async (address, searchTerm) => {
   await page.keyboard.press('Enter')
   await page.waitForNavigation({waitUntil: 'load'})
 
-  // page.on('console', msg => console.log('PAGE LOG:', msg.text()))
-
   let listings = []
   let loopNext = true
 
@@ -38,7 +34,6 @@ const getListings = async (address, searchTerm) => {
         const url = "https://isw.changeworknow.co.uk" + url_portion
         urlsPerPage.push({
           url: url
-          // text: item.querySelector('h1.panel-title a').innerText
         });
       });
 
@@ -87,8 +82,6 @@ const scrapePage = ({url, $, existingData }) => {
   };
   return data;
 };
-
-// getListings()
 
 module.exports = {
   scrapePage,
