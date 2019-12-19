@@ -1,7 +1,5 @@
 let request = require('request-promise');
 const cheerio = require('cheerio')
-const moment = require('moment');
-
 
 const listingUrl = 'https://ldn.tbe.taleo.net/ldn02/ats/careers/v2/searchResults?org=ARNOTTS&cws=48'
 
