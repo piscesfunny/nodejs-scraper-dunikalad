@@ -21,7 +21,7 @@ const getListings = async (address, searchTerm) => {
 
   listingUrl = $('#pagination').find('.active').next('.page').attr('href')
   if (listingUrl)
-    getListings()   //scraping paginated lists
+    getListings(listingUrl)   //scraping paginated lists
   else
     return listings
 };
