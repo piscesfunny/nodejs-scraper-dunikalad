@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
 const moment = require('moment');
 const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
 

@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 
@@ -28,7 +28,7 @@ const {
 
 const { scrapePage, getListings, scrapePageRequestOptions } = sources[source];
 
-console.log('starting test...')
+console.log('starting test...');
 
 if (testFunction === 'getListings') {
   const main = async () => {

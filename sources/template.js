@@ -3,7 +3,7 @@
 //   formatted: String
 // }
 
-const listingUrl = 'https://test.com/test-listing'
+const listingUrl = 'https://test.com/test-listing';
 
 const getListings = (
   formattedAddress, // Address
@@ -28,7 +28,7 @@ const scrapePage = ({
   return data;
 };
 
-const scrapePageRequestOptions = {}
+const scrapePageRequestOptions = {};
 
 module.exports = {
   scrapePage,

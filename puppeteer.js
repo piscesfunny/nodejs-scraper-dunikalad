@@ -44,4 +44,4 @@ const clearTextInputAndType = async (input, text) => {
 module.exports = {
   initPuppeteer,
   clearTextInputAndType
-}
+};

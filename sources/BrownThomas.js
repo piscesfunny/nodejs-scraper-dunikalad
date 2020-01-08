@@ -1,7 +1,7 @@
 let request = require('request-promise');
-const cheerio = require('cheerio')
+const cheerio = require('cheerio');
 
-const listingUrl = 'https://ldn.tbe.taleo.net/ldn02/ats/careers/v2/searchResults?org=ARNOTTS&cws=48'
+const listingUrl = 'https://ldn.tbe.taleo.net/ldn02/ats/careers/v2/searchResults?org=ARNOTTS&cws=48';
 
 const getListings = async (address, searchTerm) => {
   request = request.defaults({
@@ -14,29 +14,29 @@ const getListings = async (address, searchTerm) => {
     uri: listingUrl,
   });
 
-  const cookie = response.headers['set-cookie'][0]
-  const $ = cheerio.load(response.body)
-  const matchedPositions = parseInt($('span.oracletaleocwsv2-panel-number').text())
+  const cookie = response.headers['set-cookie'][0];
+  const $ = cheerio.load(response.body);
+  const matchedPositions = parseInt($('span.oracletaleocwsv2-panel-number').text());
 
-  let listings = []
+  let listings = [];
   $('div.oracletaleocwsv2-accordion-expandable').map((key, item) => {
-    const urlA = $(item).find('div.oracletaleocwsv2-accordion-head-info h4.oracletaleocwsv2-head-title a')
+    const urlA = $(item).find('div.oracletaleocwsv2-accordion-head-info h4.oracletaleocwsv2-head-title a');
     if (urlA) {
-      const url = $(urlA).attr('href')
+      const url = $(urlA).attr('href');
       listings.push({
         'url': url,
         company: 'BrownThomas',
       });
     }
-  })
+  });
 
-  const requestCount = Math.ceil(matchedPositions/10) - 1
-  let requestUrl = '', pageStart = 0
+  const requestCount = Math.ceil(matchedPositions/10) - 1;
+  let requestUrl = '', pageStart = 0;
   for (let i=0; i<requestCount; i++) {
-    pageStart = (i+1)*10
-    requestUrl = 'https://ldn.tbe.taleo.net/ldn02/ats/careers/v2/searchResults?next&'
-    requestUrl += 'rowFrom=' + pageStart.toString() + '&act=null&sortColumn=null&sortOrder=null&'
-    requestUrl += 'currentTime=' + Date.now()
+    pageStart = (i+1)*10;
+    requestUrl = 'https://ldn.tbe.taleo.net/ldn02/ats/careers/v2/searchResults?next&';
+    requestUrl += 'rowFrom=' + pageStart.toString() + '&act=null&sortColumn=null&sortOrder=null&';
+    requestUrl += 'currentTime=' + Date.now();
 
     const response = await request({
       resolveWithFullResponse: true,
@@ -44,13 +44,13 @@ const getListings = async (address, searchTerm) => {
       header: {
         'Cookie': cookie
       }
-    })
+    });
 
-    const $ = cheerio.load(response.body)
+    const $ = cheerio.load(response.body);
     $('div.oracletaleocwsv2-accordion-expandable').map((key, item) => {
-      const urlA = $(item).find('div.oracletaleocwsv2-accordion-head-info h4.oracletaleocwsv2-head-title a')
+      const urlA = $(item).find('div.oracletaleocwsv2-accordion-head-info h4.oracletaleocwsv2-head-title a');
       if (urlA) {
-        const url = $(urlA).attr('href')
+        const url = $(urlA).attr('href');
         listings.push({
           'url': url,
         });
@@ -59,10 +59,10 @@ const getListings = async (address, searchTerm) => {
   }
 
   return listings
-}
+};
 
 const processTitle = (title) => {
-  title = title.replace(/Brown Thomas|Arnotts/gi, '')
+  title = title.replace(/Brown Thomas|Arnotts/gi, '');
   if (title.includes(',')) {
     return title
     .split(',')
@@ -72,17 +72,17 @@ const processTitle = (title) => {
     .join(',')
   }
   return title.replace(/\s\s/g, ' ');
-}
+};
 
 const scrapePage = ({url, $, existingData }) => {
-  const wrapperElement = $('div.col-md-4 div.oracletaleocwsv2-job-description')
-  const title = $('div.col-md-4 div.oracletaleocwsv2-job-description > strong').text().trim()
+  const wrapperElement = $('div.col-md-4 div.oracletaleocwsv2-job-description');
+  const title = $('div.col-md-4 div.oracletaleocwsv2-job-description > strong').text().trim();
 
-  const formattedAddress = wrapperElement.find('div.row div.col-md-12').last().find('strong').text().trim()
+  const formattedAddress = wrapperElement.find('div.row div.col-md-12').last().find('strong').text().trim();
 
   const company = /Arnotts/ig.test(title) ?  'Arnotts': 'Brown Thomas';
   
-  const description = $('div.col-md-8').html().trim()
+  const description = $('div.col-md-8').html().trim();
 
   const data = {
     url,
