@@ -21,11 +21,12 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
   });
 
   const nextPageLink = $('.JT-pagination').find('.JT-active').next('.JT-item').attr('href');
-  if (nextPageLink)
-    getListings(address, searchTerm, nextPageLink);   //scraping paginated lists
-  else
-    return listings
 
+  if (nextPageLink === undefined) {
+    return listings
+  }
+
+  return getListings(address, searchTerm, nextPageLink);   //scraping paginated lists
 };
 
 const scrapePage = ({ url, $, existingData }) => {

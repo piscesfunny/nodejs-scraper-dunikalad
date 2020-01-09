@@ -20,10 +20,12 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
   });
 
   const nextPageLink = $('#pagination').find('.active').next('.page').attr('href');
-  if (nextPageLink)
-    getListings(address, searchTerm, nextPageLink);   //scraping paginated lists
-  else
+
+  if (nextPageLink === undefined) {
     return listings
+  }
+
+  return getListings(address, searchTerm, nextPageLink);   //scraping paginated lists
 };
 
 const scrapePage = ({ url, $, existingData }) => {
