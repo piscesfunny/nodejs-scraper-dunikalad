@@ -49,12 +49,6 @@ const scrapePage = ({ url, $, existingData }) => {
     return data;
 };
 
-// const main = async () => {
-//     const result = await getListings({}, '')
-//     const temp = result
-// }
-// main()
-
 module.exports = {
     scrapePage,
     getListings,
