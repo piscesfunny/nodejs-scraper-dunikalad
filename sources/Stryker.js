@@ -14,9 +14,11 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 
     urlElements.map((key, item) => {
         const urlPortion = $(item).find('td.job-result-title-cell a').attr('href');
+        const formattedAddress = $(item).find('.address-line').text().trim();
         const fullUrl = 'https://careers.stryker.com' + urlPortion;
         listings.push({
-            'url': fullUrl
+            'url': fullUrl,
+            formattedAddress
         })
     });
 
@@ -33,15 +35,12 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 const scrapePage = ({ url, $, existingData }) => {
     const title = $('#jdp-title-job-title span.jdp-title-job-title').text().trim();
     const description = $('#jdp-job-description-section div.jdp-job-description-card').html().trim();
-    const jobLocation = $('span.jobLocation').text().trim()
-    const formattedAddress = `${jobLocation}, County ${jobLocation}, Ireland`
 
     const company = 'Stryker';
 
     const data = {
         url,
         title,
-        formattedAddress,
         description,
         company,
         ...existingData
