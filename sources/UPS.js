@@ -19,7 +19,6 @@ const getListings = async (address, searchTerm) => {
   const company = 'UPS'
   const url = 'https://ups.taleo.net/careersection/10041/jobdetail.ftl'
 
-
   let count
   let linkHandlers
 
@@ -112,8 +111,8 @@ const getListings = async (address, searchTerm) => {
   return data
 };
 
-const scrapePage = async ({ existingData }) => {
-
+const scrapePage = async ({ url, existingData }) => {
+  return { ...existingData, url }
 };
 
 const timeout = millis => new Promise(resolve => setTimeout(resolve, millis))
