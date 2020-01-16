@@ -1,9 +1,9 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
 const moment = require('moment');
-const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
 const { flatten } = require('lodash');
 
+const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
 const optionalKeys = ['salaryString', 'closesAt', 'jobType'];
 
 const jobTypes = [
@@ -30,7 +30,7 @@ const getMissingKeys = (item) => {
 const isValidItem = (item) => {
   const keys = getMissingKeys(item);
   if (keys.length) {
-    throw new Error('Item has missing keys: ', keys.toString());
+    throw new Error('Item has missing keys: ' + keys.toString());
   }
 
   Object.keys(item).forEach((key) => {
