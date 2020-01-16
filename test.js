@@ -68,6 +68,7 @@ if (testFunction === 'all') {
 
     fs.writeFileSync('./results/full-test-results.json', JSON.stringify(data, null, 2));
     isValidItem(data);
+    console.log('Finished scraping');
   };
 
   return main().catch(console.error);
