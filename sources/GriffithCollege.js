@@ -27,12 +27,12 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 
         jobTitleDescriptionElements.map((key, item) => {
             title = $(item).find('.accordion-item-title').text().trim()
-            description = $(item).find('.accordion-item-body').html().trim()
-
+            description = $(item).find('.accordion-item-body')
+            description.find('p > a').parent().remove();
             data.push({
                 url,
                 title,
-                description,
+                description: description.html().trim(),
                 formattedAddress,
                 company,
             })
@@ -43,7 +43,10 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 };
 
 const scrapePage = async ({ url, $, existingData }) => {
-
+    return {
+        url,
+        ...existingData
+    }
 };
 
 
