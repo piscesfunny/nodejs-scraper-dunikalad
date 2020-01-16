@@ -2,6 +2,7 @@ const request = require('request-promise');
 const cheerio = require('cheerio');
 const moment = require('moment');
 const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
+const { flatten } = require('lodash');
 
 const optionalKeys = ['salaryString', 'closesAt', 'jobType'];
 
