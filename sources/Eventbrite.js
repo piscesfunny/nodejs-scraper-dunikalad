@@ -34,7 +34,7 @@ const scrapePage = async ({ url, existingData }) => {
     const title = $('#block_image_text_0_0 h1').text().trim();
     const formattedAddress = $('#block_image_text_0_0 h2').text().trim();
     const jobTypeText = $('#job_sub_header_2_0').text().trim();
-    const jobType = jobTypeText.split(' | ')[0]
+    const jobTypes = jobTypeText.split(' | ')[0]
 
     let descriptionElement = $('.job-description').children().first();
     let description = $.html(descriptionElement).trim() + '\n';
@@ -60,7 +60,7 @@ const scrapePage = async ({ url, existingData }) => {
         description,
         formattedAddress,
         company,
-        jobType,
+        jobTypes,
         ...existingData
     };
     return data;

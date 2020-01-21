@@ -80,8 +80,6 @@ const getListings = async (address, searchTerm) => {
     });
 
     browser.close();
-    debugger
-
     return data
 
   } catch(error) {

@@ -6,7 +6,7 @@ const getListings = async (address, searchTerm) => {
 
   const { browser, page } = await initPuppeteer({
     defaultViewport: null,
-    slowMo: 100
+    // slowMo: 100
   });
   let data = []
   try {
@@ -67,6 +67,7 @@ const getListings = async (address, searchTerm) => {
 
             page.click('.erq_large_button')
             await page.waitForSelector('.erq_searchv4_big_anchor');
+            await page.waitFor(500);
           } else {
             console.log(`Link not found: job title-${count} : ${title}`);
           }
@@ -79,7 +80,6 @@ const getListings = async (address, searchTerm) => {
     });
 
     browser.close();
-    debugger
 
     return data
 

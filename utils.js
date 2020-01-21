@@ -4,7 +4,7 @@ const moment = require('moment');
 const { flatten } = require('lodash');
 
 const requiredKeys = ['title', 'formattedAddress', 'description', 'company', 'url'];
-const optionalKeys = ['salaryString', 'closesAt', 'jobType'];
+const optionalKeys = ['salaryString', 'closesAt', 'jobTypes'];
 
 const jobTypes = [
   { name: 'Full-time', values: ['full-time', 'full time', 'fulltime'] },
@@ -50,9 +50,9 @@ const isValidItem = (item) => {
     throw new Error (`Item has invalid closesAt value - ${item.closesAt}`);
   }
 
-  if (item.jobType) {
-    if (!jobTypesRegex.test(item.jobType)) {
-      throw new Error (`Job type text does not contain a valid job type - ${item.jobType}`);
+  if (item.jobTypes) {
+    if (!jobTypesRegex.test(item.jobTypes)) {
+      throw new Error (`Job type text does not contain a valid job type - ${item.jobTypes}`);
     }
   }
 };

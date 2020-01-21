@@ -111,12 +111,12 @@ const scrapePage = async ({ url, $, existingData }) => {
             description += descriptionElement.outerHTML.trim() + '\n';
         }
 
-        const jobType = otherElement.querySelectorAll('table tbody tr')[1].querySelectorAll('td')[1].innerText.trim()
+        const jobTypes = otherElement.querySelectorAll('table tbody tr')[1].querySelectorAll('td')[1].innerText.trim()
 
-        return { title, formattedAddress, description, jobType }
+        return { title, formattedAddress, description, jobTypes }
     });
 
-    const { title, formattedAddress, description, jobType } = result
+    const { title, formattedAddress, description, jobTypes } = result
 
     const data = {
         url,
@@ -124,7 +124,7 @@ const scrapePage = async ({ url, $, existingData }) => {
         description,
         formattedAddress,
         company,
-        jobType,
+        jobTypes,
         ...existingData
     };
 
