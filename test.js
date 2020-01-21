@@ -62,7 +62,10 @@ if (testFunction === 'all') {
       county,
       countryCode,
     };
-    const [{ url, ...existingData }] = await getListings(address, searchTerm);
+    const listing = await getListings(address, searchTerm);
+    fs.writeFileSync('./results/get-listing-results.json', JSON.stringify(listing, null, 2));
+
+    const [{ url, ...existingData }] = listing;
     const { $, resolvedUrl } = await getPage({url});
     const data = await scrapePage({ url: resolvedUrl, $, existingData });
 
