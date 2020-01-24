@@ -14,7 +14,7 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     const $ = cheerio.load(response.body);
     const urlElements = $('ul.newslist li');
 
-    let urlPortion, fullUrl, title, temp;
+    let urlPortion, fullUrl, title;
     urlElements.map((key, item) => {
         title = $(item).find('a').text().trim()
         urlPortion = $(item).find('a').attr('href');
