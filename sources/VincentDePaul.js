@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
-
+const { last } = require('lodash')
 let listingUrl = 'https://www.svp.ie/jobs/vacancies-listing.aspx';
 let listings = [];
 let count = 0
@@ -17,9 +17,8 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     urlElements.map((key, item) => {
         urlPortion = $(item).find('a').attr('href');
         if (urlPortion) {
-            urlPortion = urlPortion.trim();
-            fullUrl = `https://www.svp.ie${urlPortion}`;
-
+            const [urlPath, params] = last(urlPortion.split('/')).split('?');
+            fullUrl = `https://www.svp.ie/jobs/vacancies-listing/${encodeURIComponent(urlPath.trim())}?${params}`;
             listings.push({
                 'url': fullUrl,
             })
@@ -54,10 +53,10 @@ const scrapePage = async ({ url, $, existingData }) => {
     const title = $('#ctl00_ctxM').next().text().trim()
     let formattedAddress = $('table.TextContent tbody tr:nth-child(2)').text().trim().split(':')[1].trim();
     const description = $('div.TextContent').html().trim();
-    const company = 'St.  Vincent De Paul';
+    const company = 'St. Vincent De Paul';
 
     const data = {
-        url: decodeURI(url),
+        url,
         title,
         description,
         formattedAddress,

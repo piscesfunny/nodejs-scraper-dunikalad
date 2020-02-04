@@ -36,7 +36,7 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 };
 
 const scrapePage = async ({ url, $, existingData }) => {
-
+    return {url, ...existingData}
 };
 
 
