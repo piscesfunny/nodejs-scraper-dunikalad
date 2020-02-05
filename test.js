@@ -38,6 +38,7 @@ if (testFunction === 'getListings') {
     };
     const data = await getListings(address, searchTerm);
     fs.writeFileSync('./results/get-listing-results.json', JSON.stringify(data, null, 2));
+    console.log('Ended : testFunction - getListings');
   };
 
   return main().catch(console.error);
@@ -71,6 +72,7 @@ if (testFunction === 'all') {
 
     fs.writeFileSync('./results/full-test-results.json', JSON.stringify(data, null, 2));
     isValidItem(data);
+    console.log('Ended : testFunction - all');
   };
 
   return main().catch(console.error);
