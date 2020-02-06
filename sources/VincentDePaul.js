@@ -1,9 +1,9 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
-const { last } = require('lodash')
+const { last } = require('lodash');
 let listingUrl = 'https://www.svp.ie/jobs/vacancies-listing.aspx';
 let listings = [];
-let count = 0
+let count = 0;
 
 const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     const response = await request({
@@ -28,29 +28,23 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     const nextPageLinkPortion = $('ul.pagination li#pagNext').find('a').attr('href');
     const lastPageLinkPortion = $('ul.pagination li#pagLast').find('a').attr('href');
 
-    const nextPageNum = parseInt(nextPageLinkPortion.split('?page=')[1]) + 1
-    const lastPageNum = parseInt(lastPageLinkPortion.split('?page=')[1]) + 1
+    const nextPageNum = parseInt(nextPageLinkPortion.split('?page=')[1]) + 1;
+    const lastPageNum = parseInt(lastPageLinkPortion.split('?page=')[1]) + 1;
 
-    const realNextPageNum = nextPageNum + count
+    const realNextPageNum = nextPageNum + count;
 
     if (realNextPageNum > lastPageNum) {
         return listings
     }
 
     const nextPageLink = `https://www.svp.ie${nextPageLinkPortion}`;
-    count++
+    count++;
 
     return getListings(address, searchTerm, nextPageLink);
 };
 
 const scrapePage = async ({ url, $, existingData }) => {
-    // const response = await request({
-    //     resolveWithFullResponse: true,
-    //     uri: encodeURI(url),
-    // });
-    // const $ = cheerio.load(response.body);
-
-    const title = $('#ctl00_ctxM').next().text().trim()
+    const title = $('#ctl00_ctxM').next().text().trim();
     let formattedAddress = $('table.TextContent tbody tr:nth-child(2)').text().trim().split(':')[1].trim();
     const description = $('div.TextContent').html().trim();
     const company = 'St. Vincent De Paul';

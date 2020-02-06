@@ -33,14 +33,12 @@ const scrapePage = async ({ url, $, existingData }) => {
 
     const company = 'Kellog’s';
 
-    const data = {
+    return {
         url,
         ...existingData,
         description,
         company,
     };
-
-    return data;
 };
 
 module.exports = {
