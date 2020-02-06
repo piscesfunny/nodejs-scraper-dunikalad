@@ -12,7 +12,7 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     const $ = cheerio.load(response.body);
 
     let urlElements = $('table > tbody > tr');
-    urlElements = urlElements.slice(1)
+    urlElements = urlElements.slice(1);
 
     urlElements.map((key, item) => {
         const url = $(item).find('td').first().find('a').attr('href');
@@ -27,12 +27,12 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
 
 const scrapePage = async ({ url, $, existingData }) => {
     let title = $('#ctl00_masterPageBodyContentPlaceholder_jobTitleGroup').text().trim();
-    title = title.replace(/ *\([^)]*\) */g, '').trim();
-    const jobTypes = $('#ctl00_masterPageBodyContentPlaceholder_jobTypeFieldRow > div > p').text().trim()
-    const formattedAddress = $('#ctl00_masterPageBodyContentPlaceholder_jobLocationFieldRow > div > p').text().trim()
-    const description = $('#ctl00_masterPageBodyContentPlaceholder_jobDetailsGroup').html().trim()
+    title = title.replace(/ *\([^)]*\) */g, '').trim(); // remove characters surrounded by ( )
+    const jobTypes = $('#ctl00_masterPageBodyContentPlaceholder_jobTypeFieldRow > div > p').text().trim();
+    const formattedAddress = $('#ctl00_masterPageBodyContentPlaceholder_jobLocationFieldRow > div > p').text().trim();
+    const description = $('#ctl00_masterPageBodyContentPlaceholder_jobDetailsGroup').html().trim();
 
-    const company = 'ESB'
+    const company = 'ESB';
 
     const data = {
         url,
