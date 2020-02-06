@@ -9,7 +9,7 @@ const isDevelopment = NODE_ENV !== 'production';
 
 const getSettings = async (launchSettings) => (isDevelopment ? {
   headless: !!HEADLESS,
-  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  // executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   ...launchSettings,
 } : {
   args: chromium.args,
