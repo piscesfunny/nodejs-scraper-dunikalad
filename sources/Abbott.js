@@ -13,11 +13,6 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
     try {
         await new Promise(async (resolve, reject) => {
             try {
-                // setTimeout(() => {
-                //     console.log('Timeout exceeded');
-                //     resolve();
-                // }, 270000);
-
                 await page.goto(pageUrl, {
                     timeout: 0,
                     waitUntil: "networkidle0"
@@ -69,8 +64,6 @@ const getListings = async (address, searchTerm, pageUrl=listingUrl) => {
         return data
     }
 };
-
-// getListings()
 
 module.exports = {
     getListings,
